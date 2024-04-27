@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 15:31:10 by akunimot          #+#    #+#             */
-/*   Updated: 2024/04/27 16:02:11 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/04/27 16:31:33 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ int	ft_put_x(unsigned int uinbr, const char format)
 		ft_put_x(uinbr % 16, format);
 	}
 	else if (uinbr <= 9)
-		x_len += ft_printf_char(uinbr + '0');
+		ft_printf_char(uinbr + '0');
 	else if (format == 'x')
-		x_len += ft_printf_char(uinbr - 10 + 'a');
+		ft_printf_char(uinbr - 10 + 'a');
 	else if (format == 'X')
-		x_len += ft_printf_char(uinbr - 10 + 'A');
+		ft_printf_char(uinbr - 10 + 'A');
+	x_len++;
 	return (x_len);
 }
 
