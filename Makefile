@@ -6,7 +6,7 @@
 #    By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 05:44:54 by akunimot          #+#    #+#              #
-#    Updated: 2024/04/27 05:46:00 by akunimot         ###   ########.fr        #
+#    Updated: 2024/04/27 14:28:18 by akunimot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME 		= libftprintf.a
 FLAGS 		= -Wall -Wextra -Werror
 			
 SRCS 		= ft_printf.c \
+			  ft_printf_csp.c \
 
 CC 			= cc
 CFLAGS		= -Wall -Werror -Wextra
