@@ -6,7 +6,7 @@
 #    By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 05:44:54 by akunimot          #+#    #+#              #
-#    Updated: 2024/04/27 14:28:18 by akunimot         ###   ########.fr        #
+#    Updated: 2024/04/27 14:52:45 by akunimot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ FLAGS 		= -Wall -Wextra -Werror
 			
 SRCS 		= ft_printf.c \
 			  ft_printf_csp.c \
+			  ft_printf_diu.c \
 
 CC 			= cc
 CFLAGS		= -Wall -Werror -Wextra

@@ -6,21 +6,21 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:26:00 by akunimot          #+#    #+#             */
-/*   Updated: 2024/04/27 14:31:18 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/04/27 14:50:09 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf_char(char c, int fd)
+int	ft_printf_char(char c)
 {
-	ft_putchar_fd(c, fd);
+	ft_putchar_fd(c, 1);
 	return (1);
 }
 
-int	ft_printf_str(char *str, int fd)
+int	ft_printf_str(char *str)
 {
-	ft_putstr_fd(str, fd);
+	ft_putstr_fd(str, 1);
 	return (ft_strlen(str));
 }
 
