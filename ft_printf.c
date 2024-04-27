@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 05:46:09 by akunimot          #+#    #+#             */
-/*   Updated: 2024/04/27 09:02:10 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/04/27 13:20:35 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,104 +15,165 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-void	ft_printf_format(va_list args, char format)
+int	ft_printf_char(char c, int fd)
 {
-	if (format == 'd')
+	ft_putchar_fd(c, fd);
+	return (1);
+}
+
+int	ft_printf_str(char *str, int fd)
+{
+	ft_putstr_fd(str, fd);
+	return (ft_strlen(str));
+}
+
+int	ft_putptr(unsigned long long ptr)
+{
+	int	ptrlen;
+
+	ptrlen = 0;
+	if (ptr >= 16)
+	{
+		ptrlen += 2;
+		ft_putptr(ptr / 16);
+		ft_putptr(ptr % 16);
+	}
+	else
+	{
+		if (ptr <= 9)
+			ft_putchar_fd((ptr + '0'), 1);
+		else
+			ft_putchar_fd((ptr - 10 + 'a'), 1);
+		ptrlen++;
+	}
+	return (ptrlen);
+}
+
+int	ft_printf_ptr(unsigned long long ptr)
+{
+	int	ptrlen;
+
+	ptrlen = 0;
+	ptrlen += write(1, "0x", 2);
+	if (ptr == 0)
+		ptrlen += write(1, "0", 1);
+	else
+		ptrlen += ft_putptr(ptr);
+	return (ptrlen);
+}
+
+int	ft_printf_format(va_list args, char format)
+{
+	int	printf_len;
+
+	printf_len = 0;
+	if (format == 'c')
+		printf_len += ft_printf_char(va_arg(args, int), 1);
+	else if (format == 's')
+		printf_len += ft_printf_str(va_arg(args, char *), 1);
+	else if (format == 'p')
+		printf_len += ft_printf_ptr(va_arg(args, unsigned long long));
+	else if (format == 'd')
 		ft_putnbr_fd(va_arg(args, int), 1);
+	else if (format == 'i')
+		ft_putnbr_fd(va_arg(args, int), 1);
+	else if (format == 'u')
+		printf("%u", va_arg(args, int));
+	else if (format == 'x')
+		printf("%x", va_arg(args, int));
+	else if (format == 'X')
+		printf("%X", va_arg(args, int));
+	else if (format == '%')
+		ft_putchar_fd('%', 1);
 	else
 		(void)args;
+	return (printf_len);
 }
 
 int	ft_printf(const char *str, ...)
 {
 	int		i;
+	int		ret;
 	va_list	args;
 
 	i = 0;
+	ret = 0;
 	va_start(args, str);
 	while (str[i])
 	{
 		if (str[i] == '%')
 		{
-			ft_printf_format(args, str[i + 1]);
+			ret = ft_printf_format(args, str[i + 1]);
 		}
 		i++;
 	}
-	return (0);
+	return (ret);
 }
 
 int	main(void)
 {
+	int ret;
+	int ft_ret;
 	printf("format c : 'c'\n");
-	printf("%c", 'c');
+	ret = printf("%c", 'c');
 	printf("\n");
-	ft_printf("%c", 'c');
+	ft_ret = ft_printf("%c", 'c');
 	printf("\n");
+	printf("%d %d\n", ret, ft_ret);
 
 	printf("format s : \"abcde\"\n");
-	printf("%s", "abcde");
+	ret = printf("%s", "abcde");
 	printf("\n");
-	ft_printf("%s", "abcde");
+	ft_ret = ft_printf("%s", "abcde");
 	printf("\n");
+	printf("%d %d\n", ret, ft_ret);
 
 	printf("format p : \"abcde\"\n");
-	printf("%p", "abcde");
+	ret = printf("%p", "abcde");
 	printf("\n");
-	ft_printf("%p", "abcde");
+	ft_ret = ft_printf("%p", "abcde");
 	printf("\n");
+	printf("%d %d\n", ret, ft_ret);
 
 	printf("format d : 12345\n");
-	printf("%d", 12345);
+	ret = printf("%d", 12345);
 	printf("\n");
-	ft_printf("%d", 12345);
+	ft_ret = ft_printf("%d", 12345);
 	printf("\n");
+	printf("%d %d\n", ret, ft_ret);
 
 	printf("format i : 12345\n");
-	printf("%i", 12345);
+	ret = printf("%i", 12345);
 	printf("\n");
-	ft_printf("%i", 12345);
+	ft_ret = ft_printf("%i", 12345);
 	printf("\n");
+	printf("%d %d\n", ret, ft_ret);
 
 	printf("format u : UINT_MAX\n");
-	printf("%u", UINT_MAX);
+	ret = printf("%u", UINT_MAX);
 	printf("\n");
-	ft_printf("%u", UINT_MAX);
+	ft_ret = ft_printf("%u", UINT_MAX);
 	printf("\n");
+	printf("%d %d\n", ret, ft_ret);
 
 	printf("format x : 3\n");
-	printf("%x", 3);
+	ret = printf("%x", 3);
 	printf("\n");
-	ft_printf("%x", 3);
+	ft_ret = ft_printf("%x", 3);
 	printf("\n");
+	printf("%d %d\n", ret, ft_ret);
 
 	printf("format X : 3\n");
-	printf("%X", 3);
+	ret = printf("%X", 3);
 	printf("\n");
-	ft_printf("%X", 3);
+	ft_ret = ft_printf("%X", 3);
 	printf("\n");
+	printf("%d %d\n", ret, ft_ret);
 
 	printf("fotmat percent : percent\n");
-	printf("%%");
+	ret = printf("%%");
 	printf("\n");
-	ft_printf("%%");
+	ft_ret = ft_printf("%%");
 	printf("\n");
-
-	// printf("printf    :%c\n", 'c');
-	// ft_printf("ft_printf :%c\n", 'c');
-	// printf("printf    :%s\n", "abcde");
-	// ft_printf("ft_printf :%s\n", "abcde");
-	// printf("printf    : %p\n", "abcde");
-	// ft_printf("ft_printf :%p\n", "abcde");
-	// printf("printf    : %d\n", INT_MAX);
-	// ft_printf("ft_printf : %d\n", INT_MAX);
-	// printf("printf    : %i\n", INT_MAX);
-	// ft_printf("ft_printf : %i\n", INT_MAX);
-	// printf("printf    : %u\n", UINT_MAX);
-	// ft_printf("ft_printf : %u\n", UINT_MAX);
-	// printf("printf    : %x\n", 3);
-	// ft_printf("ft_printf : %x\n", 3);
-	// printf("printf    : %X\n", 3);
-	// ft_printf("ft_printf : %X\n", 3);
-	// printf("printf    : %%");
-	// ft_printf("ft_printf : %%");
+	printf("%d %d\n", ret, ft_ret);
 }
