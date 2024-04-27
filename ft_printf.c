@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 05:46:09 by akunimot          #+#    #+#             */
-/*   Updated: 2024/04/27 14:59:38 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:51:13 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,10 @@ int	ft_printf_format(va_list args, char format)
 		printf_len += ft_printf_int(va_arg(args, int));
 	else if (format == 'u')
 		printf_len += ft_printf_uint(va_arg(args, unsigned int));
-	else if (format == 'x')
-		printf("%x", va_arg(args, int));
-	else if (format == 'X')
-		printf("%X", va_arg(args, int));
+	else if (format == 'x' || format == 'X')
+		printf_len += ft_printf_x(va_arg(args, int), format);
 	else if (format == '%')
-		ft_putchar_fd('%', 1);
-	else
-		(void)args;
+		printf_len += ft_printf_char('%');
 	return (printf_len);
 }
 
@@ -52,8 +48,12 @@ int	ft_printf(const char *str, ...)
 		if (str[i] == '%')
 		{
 			ret = ft_printf_format(args, str[i + 1]);
+			i++;
 		}
+		else
+			ret += ft_printf_char(str[i]);
 		i++;
 	}
+	va_end(args);
 	return (ret);
 }

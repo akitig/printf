@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:26:43 by akunimot          #+#    #+#             */
-/*   Updated: 2024/04/27 15:25:57 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:46:29 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,17 @@ int		ft_printf_str(char *str);
 int		ft_putptr(unsigned long long ptr);
 int		ft_printf_ptr(unsigned long long ptr);
 
+int		ft_printf_percent(void);
+
 // ft_printf_diu.c
 int		ft_uilen(unsigned int uinbr);
 char	*ft_uitoa(unsigned int uinbr);
 int		ft_printf_uint(unsigned int uinbr);
 
 int		ft_printf_int(int nbr);
+
+// ft_printf_x.c
+int		ft_put_x(unsigned int uinbr, const char format);
+int		ft_printf_x(unsigned int uinbr, const char format);
 
 #endif

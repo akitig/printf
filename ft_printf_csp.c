@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:26:00 by akunimot          #+#    #+#             */
-/*   Updated: 2024/04/27 14:50:09 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:51:39 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_putptr(unsigned long long ptr)
 
 int	ft_printf_ptr(unsigned long long ptr)
 {
-	int ptrlen;
+	int	ptrlen;
 
 	ptrlen = 0;
 	ptrlen += write(1, "0x", 2);
