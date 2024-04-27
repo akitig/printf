@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:26:00 by akunimot          #+#    #+#             */
-/*   Updated: 2024/04/27 15:51:39 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/04/27 16:11:07 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,16 @@ int	ft_printf_char(char c)
 
 int	ft_printf_str(char *str)
 {
-	ft_putstr_fd(str, 1);
-	return (ft_strlen(str));
+	if (!str)
+	{
+		ft_putstr_fd("(null)", 1);
+		return (6);
+	}
+	else
+	{
+		ft_putstr_fd(str, 1);
+		return (ft_strlen(str));
+	}
 }
 
 int	ft_putptr(unsigned long long ptr)

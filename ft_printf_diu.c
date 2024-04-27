@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:45:53 by akunimot          #+#    #+#             */
-/*   Updated: 2024/04/27 15:30:02 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:55:32 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int	ft_printf_uint(unsigned int uinbr)
 
 int	ft_printf_int(int nbr)
 {
-	int nbrlen;
-	char *strnbr;
+	int		nbrlen;
+	char	*strnbr;
 
 	nbrlen = 0;
 	strnbr = ft_itoa(nbr);

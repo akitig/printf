@@ -6,13 +6,13 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 05:46:09 by akunimot          #+#    #+#             */
-/*   Updated: 2024/04/27 15:51:13 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/04/27 16:06:45 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf_format(va_list args, char format)
+int	ft_printf_format(va_list args, const char format)
 {
 	int	printf_len;
 
@@ -43,11 +43,11 @@ int	ft_printf(const char *str, ...)
 	i = 0;
 	ret = 0;
 	va_start(args, str);
-	while (str[i])
+	while (str[i] != 0)
 	{
 		if (str[i] == '%')
 		{
-			ret = ft_printf_format(args, str[i + 1]);
+			ret += ft_printf_format(args, str[i + 1]);
 			i++;
 		}
 		else
