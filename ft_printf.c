@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 05:46:09 by akunimot          #+#    #+#             */
-/*   Updated: 2024/04/30 05:14:01 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/04/30 06:57:28 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,23 @@ int	ft_printf_format(va_list args, const char format, const char *op)
 	return (printf_len);
 }
 
+int	ft_printf_with_op(const char *str, va_list args, int *i)
+{
+	int		len;
+	char	*op;
+
+	len = 0;
+	while (ft_isascii(str[*i]) && !ft_isalpha(str[*i]))
+		(*i)++;
+	op = ft_substr(str, 1, *i);
+	len += ft_printf_format(args, str[(*i)], op);
+	free(op);
+	return (len);
+}
+
 int	ft_printf(const char *str, ...)
 {
 	int		i;
-	char	*op;
 	int		ret;
 	va_list	args;
 
@@ -48,16 +61,15 @@ int	ft_printf(const char *str, ...)
 	{
 		if (*str == '%')
 		{
-			i = 0;
-			while (ft_isalnum(str[i]))
-				i++;
-			op = ft_substr(str, 0, i);
-			ret += ft_printf_format(args, op[0], op);
-			str += i;
+			i = 1;
+			if (*(str + 1) == '%')
+				ret += ft_printf_format(args, '%', NULL);
+			else
+				ret += ft_printf_with_op(str, args, &i);
+			str += i + 1;
 		}
 		else
-			ret += ft_printf_char(str[i]);
-		str++;
+			ret += ft_printf_char(*str++);
 	}
 	va_end(args);
 	return (ret);
