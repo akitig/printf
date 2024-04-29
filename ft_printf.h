@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:26:43 by akunimot          #+#    #+#             */
-/*   Updated: 2024/04/27 15:46:29 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/04/30 04:46:30 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h>
 
 // ft_printf.c
-int		ft_printf_format(va_list args, char format);
+int		ft_printf_format(va_list args, char format, const char *op);
 int		ft_printf(const char *str, ...);
 
 // ft_printf_csp.c

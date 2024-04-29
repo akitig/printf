@@ -6,13 +6,11 @@
 #    By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/27 05:44:54 by akunimot          #+#    #+#              #
-#    Updated: 2024/04/27 15:31:54 by akunimot         ###   ########.fr        #
+#    Updated: 2024/04/30 04:53:12 by akunimot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		= libftprintf.a
-
-FLAGS 		= -Wall -Wextra -Werror
 			
 SRCS 		= ft_printf.c \
 			  ft_printf_csp.c \
@@ -31,6 +29,9 @@ $(NAME): ${OBJS}
 	${LIBFT_MAKE}
 	cp libft/libft.a $(NAME)
 	ar rcs $(NAME) $(OBJS)
+
+%.o:            %.c
+				$(CC) $(CFLAGS) -c $< -o $@
 
 bonus: $(NAME)
 
