@@ -1,4 +1,4 @@
-#include "printf/ft_printf.h"
+#include "ft_printf.h"
 #include <assert.h>
 #include <limits.h>
 #include <stdio.h>
@@ -18,12 +18,17 @@ int	main(void)
 
 	// s
 	puts("s");
-	ft_printf("\n%-5s", "123");
+	ft_printf("ft:%-2s\n", "123");
+	printf("lim:%-2s\n", "123");
 	// ft_printf("\n%05s", "123");
-	ft_printf("\n%.5s", "123");
+	ft_printf("ft:%.2s\n", "123");
+	printf("lib:%.2s\n", "123");
 	// ft_printf("\n% 5s", "123");
 	// ft_printf("\n%#5s", "123");
 	// ft_printf("\n%+5s", "123");
+	// ft_printf("\n%2s", "123");
+	// ft_printf("\n%s", "123");
+
 	ft_printf("\n");
 
 	// p
@@ -40,7 +45,9 @@ int	main(void)
 	puts("d");
 	ft_printf("%-5d\n", 123);
 	ft_printf("%05d\n", 123);
-	ft_printf("%.5d\n", 123);
+
+	ft_printf("own:%.5d\n", 123);
+	printf("lib:%.5d ", 123);
 	ft_printf("% 5d\n", 123);
 	// ft_printf("%#5d\n", 123);
 	ft_printf("%+5d\n", 123);
