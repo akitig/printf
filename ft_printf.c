@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 05:46:09 by akunimot          #+#    #+#             */
-/*   Updated: 2024/04/27 16:06:45 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:46:27 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ int	ft_printf_format(va_list args, const char format)
 	return (printf_len);
 }
 
+bool	is_format(char c)
+{
+	return (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u'
+		|| c == 'x' || c == 'X' || c == '%');
+}
+
 int	ft_printf(const char *str, ...)
 {
 	int		i;
@@ -45,9 +51,12 @@ int	ft_printf(const char *str, ...)
 	va_start(args, str);
 	while (str[i] != 0)
 	{
-		if (str[i] == '%')
+		if (str[i] == '%' && !str[i + 1])
+			break ;
+		else if (str[i] == '%' && str[i + 1])
 		{
-			ret += ft_printf_format(args, str[i + 1]);
+			if (is_format(str[i + 1]))
+				ret += ft_printf_format(args, str[i + 1]);
 			i++;
 		}
 		else
