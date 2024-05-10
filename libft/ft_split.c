@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akunimot <akitig24@gmail.com>              +#+  +:+       +#+        */
+/*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 07:43:05 by akunimot          #+#    #+#             */
-/*   Updated: 2024/04/23 13:51:34 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/05/10 22:08:34 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ void	*ft_allocate_word(char **ans, char *str, char c)
 
 char	**ft_split(const char *s, char c)
 {
-	char		**ans;
-	char		*str;
-	size_t		wc;
+	char	**ans;
+	char	*str;
+	size_t	wc;
 
 	if (!s)
 		return (NULL);
