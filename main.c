@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:29:08 by akunimot          #+#    #+#             */
-/*   Updated: 2024/05/13 19:04:04 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:36:45 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	main(void)
 	printf("\n");
 	fflush(NULL);
 	ft_ret = ft_printf("%c", 'c');
-
+	fflush(NULL);
+	printf("\n");
 	printf("%d %d\n\n", ret, ft_ret);
 
 	printf("format s : \"abcde\"\n");
@@ -29,6 +30,7 @@ int	main(void)
 	printf("\n");
 	fflush(NULL);
 	ft_ret = ft_printf("%s", "abcde");
+	fflush(NULL);
 	printf("\n");
 	printf("%d %d\n\n", ret, ft_ret);
 
@@ -38,6 +40,7 @@ int	main(void)
 	printf("\n");
 	fflush(NULL);
 	ft_ret = ft_printf(" NULL %s NULL ", NULL);
+	fflush(NULL);
 	printf("\n");
 	printf("%d %d\n\n", ret, ft_ret);
 
@@ -46,6 +49,7 @@ int	main(void)
 	printf("\n");
 	fflush(NULL);
 	ft_ret = ft_printf("%p", "abcde");
+	fflush(NULL);
 	printf("\n");
 	printf("%d %d\n\n", ret, ft_ret);
 
@@ -54,6 +58,7 @@ int	main(void)
 	printf("\n");
 	fflush(NULL);
 	ft_ret = ft_printf("%d", 12345);
+	fflush(NULL);
 	printf("\n");
 	printf("%d %d\n\n", ret, ft_ret);
 
@@ -62,6 +67,7 @@ int	main(void)
 	printf("\n");
 	fflush(NULL);
 	ft_ret = ft_printf("%i", 12345);
+	fflush(NULL);
 	printf("\n");
 	printf("%d %d\n\n", ret, ft_ret);
 
@@ -70,6 +76,7 @@ int	main(void)
 	printf("\n");
 	fflush(NULL);
 	ft_ret = ft_printf("%u", UINT_MAX);
+	fflush(NULL);
 	printf("\n");
 	printf("%d %d\n\n", ret, ft_ret);
 
@@ -78,6 +85,7 @@ int	main(void)
 	printf("\n");
 	fflush(NULL);
 	ft_ret = ft_printf("%x", 3);
+	fflush(NULL);
 	printf("\n");
 	printf("%d %d\n\n", ret, ft_ret);
 
@@ -86,6 +94,7 @@ int	main(void)
 	printf("\n");
 	fflush(NULL);
 	ft_ret = ft_printf(" %x", 3);
+	fflush(NULL);
 	printf("\n");
 	printf("%d %d\n\n", ret, ft_ret);
 
@@ -94,6 +103,7 @@ int	main(void)
 	printf("\n");
 	fflush(NULL);
 	ft_ret = ft_printf("%X", 3);
+	fflush(NULL);
 	printf("\n");
 	printf("%d %d\n\n", ret, ft_ret);
 
@@ -102,6 +112,7 @@ int	main(void)
 	printf("\n");
 	fflush(NULL);
 	ft_ret = ft_printf(" %X", 3);
+	fflush(NULL);
 	printf("\n");
 	printf("%d %d\n\n", ret, ft_ret);
 
@@ -110,6 +121,17 @@ int	main(void)
 	printf("\n");
 	fflush(NULL);
 	ft_ret = ft_printf("%%");
+	fflush(NULL);
+	printf("\n");
+	printf("%d %d\n\n", ret, ft_ret);
+
+	printf("fotmat percent : percent\n");
+
+	ret = printf("%sx", "{} al$#@@@^&$$^#^@@^$*((&");
+	printf("\n");
+	fflush(NULL);
+	ft_ret = ft_printf("%sx", "{} al$#@@@^&$$^#^@@^$*((&");
+	fflush(NULL);
 	printf("\n");
 	printf("%d %d\n\n", ret, ft_ret);
 }

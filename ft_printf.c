@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 05:46:09 by akunimot          #+#    #+#             */
-/*   Updated: 2024/05/13 19:02:24 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/05/13 21:36:39 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,30 @@ bool	is_format(char c)
 	return (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' || c == 'u'
 		|| c == 'x' || c == 'X' || c == '%');
 }
-
-void	set_each_flg(char c, t_flg *flgs)
+void	error_flg(t_flg *flgs)
 {
-	if (c == '-')
-		flgs->hyphen = true;
-	else if (c == '.')
-		flgs->dot = true;
-	else if (c == '0')
-		flgs->zero = true;
-	else if (c == ' ')
-		flgs->space = true;
-	else if (c == '#')
-		flgs->shape = true;
-	else if (c == '+')
-		flgs->plus = true;
+	if ((flgs->hyphen && flgs->zero) || (flgs->plus && flgs->space)
+		|| (flgs->plus && flgs->shape) || (flgs->space && flgs->shape))
+	{
+		printf("error flg");
+		flgs->error = true;
+	}
 }
-
-bool	error_flg(t_flg flgs)
+void	set_each_flg(char *str, t_flg *flgs)
 {
-	return ((flgs.hyphen && flgs.zero) || (flgs.plus && flgs.space)
-		|| (flgs.plus && flgs.shape) || (flgs.space && flgs.shape));
+	if (*str == '-')
+		flgs->hyphen = true;
+	else if (*str == '.')
+		flgs->dot = true;
+	else if (*str == '0')
+		flgs->zero = true;
+	else if (*str == ' ')
+		flgs->space = true;
+	else if (*str == '#')
+		flgs->shape = true;
+	else if (*str == '+')
+		flgs->plus = true;
+	error_flg(flgs);
 }
 
 void	init_flgs(t_flg *flgs)
@@ -106,35 +109,58 @@ void	error_flg_format(t_flg *flgs)
 		flgs->error = true;
 }
 
-t_flg	set_flgs(const char *str, int *i)
+t_flg	set_flgs(char *str)
 {
 	t_flg	flgs;
 
 	init_flgs(&flgs);
 	while (!flgs.error)
 	{
-		while (is_flg(str[(*i)++]))
-			set_each_flg(str[*i], &flgs);
-		if (error_flg(flgs))
-			flgs.error = true;
-		else if (ft_isdigit(str[*i]))
+		if (*str == '%')
+		{
+			flgs.format = '%';
+			return (flgs);
+		}
+		while (is_flg(*str))
+			set_each_flg(str, &flgs);
+		if (ft_isdigit(*str))
 		{
 			flgs.width = ft_atoi(str);
-			*i += ft_intlen(flgs.width);
+			str += ft_intlen(flgs.width);
 		}
-		else if (is_format(str[(*i)++]))
-			flgs.format = str[*i];
+		if (is_format(*str))
+		{
+			flgs.format = *str;
+			str++;
+		}
 		error_flg_format(&flgs);
 		break ;
 	}
 	return (flgs);
 }
 
-int	ft_printf_flgs(const char *str, t_flg *flg, int *i)
+int	ft_printf_flgs(va_list args, t_flg *flg)
 {
-	printf("%s\n", str);
-	printf("%d\n", *i);
-	printf("flg.error :%d\n", flg->error);
+	int	printf_len;
+
+	printf_len = 0;
+	if (flg->format == 'c')
+		printf_len += ft_printf_char(va_arg(args, int));
+	else if (flg->format == 's')
+		printf_len += ft_printf_str(va_arg(args, char *));
+	else if (flg->format == 'p')
+		printf_len += ft_printf_ptr(va_arg(args, unsigned long long));
+	else if (flg->format == 'd' || flg->format == 'i')
+		printf_len += ft_printf_int(va_arg(args, int));
+	else if (flg->format == 'u')
+		printf_len += ft_printf_uint(va_arg(args, unsigned int));
+	else if (flg->format == 'x' || flg->format == 'X')
+		printf_len += ft_printf_x(va_arg(args, int), flg->format);
+	else if (flg->format == '%')
+		printf_len += ft_printf_char('%');
+	return (printf_len);
+	// printf("%d\n", *i);
+	// printf("flg.error :%d\n", flg->error);
 	// printf("flg.hyphen:%d\n", flg->hyphen);
 	// printf("flg.dot   :%d\n", flg->dot);
 	// printf("flg.plus  :%d\n", flg->plus);
@@ -143,41 +169,44 @@ int	ft_printf_flgs(const char *str, t_flg *flg, int *i)
 	// printf("flg.zero  :%d\n", flg->zero);
 	// printf("flg.width :%d\n", flg->width);
 	// printf("flg.format:%c\n", flg->format);
-	return (1);
+	// return (1);
 }
 
 int	ft_printf(const char *str, ...)
 {
-	int		i;
 	int		ret;
 	va_list	args;
 	t_flg	flgs;
+	char	*first;
 
-	i = 0;
 	ret = 0;
 	va_start(args, str);
-	while (str[i] != 0)
+	init_flgs(&flgs);
+	while (*str && !flgs.error)
 	{
-		if (str[i] == '%' && !str[i + 1])
-			break ;
-		else if (str[i] == '%' && str[i + 1])
+		if (*str == '%')
 		{
-			if (str[i + 1] == '%')
+			first = (char *)str;
+			if (*(str))
+			{
+				str++;
+				flgs = set_flgs((char *)str);
+				ret += ft_printf_flgs(args, &flgs);
+				while (is_flg(*str))
+					str++;
+			}
+			// if (!(*str))
+			// 	str = first;
+			else
 			{
 				ret += ft_printf_char('%');
-				i++;
-				break ;
+				str++;
 			}
-			flgs = set_flgs(str, &i);
-			if (flgs.error)
-				return (-1);
-			ret += ft_printf_flgs(str, &flgs, &i);
 		}
 		else
-		{
-			ret += ft_printf_char(str[i]);
-			i++;
-		}
+			ret += ft_printf_char(*str);
+		if (*str)
+			str++;
 	}
 	va_end(args);
 	return (ret);
