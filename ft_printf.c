@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 05:46:09 by akunimot          #+#    #+#             */
-/*   Updated: 2024/05/10 21:20:24 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/05/13 19:02:24 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ t_flg	set_flgs(const char *str, int *i)
 	init_flgs(&flgs);
 	while (!flgs.error)
 	{
-		while (is_flg(str[*i++]))
+		while (is_flg(str[(*i)++]))
 			set_each_flg(str[*i], &flgs);
 		if (error_flg(flgs))
 			flgs.error = true;
@@ -122,7 +122,7 @@ t_flg	set_flgs(const char *str, int *i)
 			flgs.width = ft_atoi(str);
 			*i += ft_intlen(flgs.width);
 		}
-		else if (is_format(str[*i++]))
+		else if (is_format(str[(*i)++]))
 			flgs.format = str[*i];
 		error_flg_format(&flgs);
 		break ;
@@ -132,17 +132,17 @@ t_flg	set_flgs(const char *str, int *i)
 
 int	ft_printf_flgs(const char *str, t_flg *flg, int *i)
 {
-	printf("%s", str);
-	printf("%d", *i);
+	printf("%s\n", str);
+	printf("%d\n", *i);
 	printf("flg.error :%d\n", flg->error);
-	printf("flg.hyphen:%d\n", flg->hyphen);
-	printf("flg.dot   :%d\n", flg->dot);
-	printf("flg.plus  :%d\n", flg->plus);
-	printf("flg.space :%d\n", flg->space);
-	printf("flg.shape :%d\n", flg->shape);
-	printf("flg.zero  :%d\n", flg->zero);
-	printf("flg.width :%d\n", flg->width);
-	printf("flg.format:%c\n", flg->format);
+	// printf("flg.hyphen:%d\n", flg->hyphen);
+	// printf("flg.dot   :%d\n", flg->dot);
+	// printf("flg.plus  :%d\n", flg->plus);
+	// printf("flg.space :%d\n", flg->space);
+	// printf("flg.shape :%d\n", flg->shape);
+	// printf("flg.zero  :%d\n", flg->zero);
+	// printf("flg.width :%d\n", flg->width);
+	// printf("flg.format:%c\n", flg->format);
 	return (1);
 }
 
@@ -155,23 +155,29 @@ int	ft_printf(const char *str, ...)
 
 	i = 0;
 	ret = 0;
-	printf("test");
 	va_start(args, str);
-	while (str[i])
+	while (str[i] != 0)
 	{
-		printf("test");
 		if (str[i] == '%' && !str[i + 1])
 			break ;
 		else if (str[i] == '%' && str[i + 1])
 		{
+			if (str[i + 1] == '%')
+			{
+				ret += ft_printf_char('%');
+				i++;
+				break ;
+			}
 			flgs = set_flgs(str, &i);
 			if (flgs.error)
 				return (-1);
 			ret += ft_printf_flgs(str, &flgs, &i);
 		}
 		else
-			ret += ft_printf_char(str[i++]);
-		break ;
+		{
+			ret += ft_printf_char(str[i]);
+			i++;
+		}
 	}
 	va_end(args);
 	return (ret);
