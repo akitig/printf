@@ -6,7 +6,7 @@
 /*   By: akunimot <akunimot@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 05:46:09 by akunimot          #+#    #+#             */
-/*   Updated: 2024/05/13 21:36:39 by akunimot         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:12:11 by akunimot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,19 @@ int	ft_printf_flgs(va_list args, t_flg *flg)
 	// return (1);
 }
 
+void	ft_list_printf(t_flg flg)
+{
+	printf("flg.error :%d\n", flg.error);
+	printf("flg.hyphen:%d\n", flg.hyphen);
+	printf("flg.dot   :%d\n", flg.dot);
+	printf("flg.plus  :%d\n", flg.plus);
+	printf("flg.space :%d\n", flg.space);
+	printf("flg.shape :%d\n", flg.shape);
+	printf("flg.zero  :%d\n", flg.zero);
+	printf("flg.width :%d\n", flg.width);
+	printf("flg.format:%c\n", flg.format);
+}
+
 int	ft_printf(const char *str, ...)
 {
 	int		ret;
@@ -195,8 +208,6 @@ int	ft_printf(const char *str, ...)
 				while (is_flg(*str))
 					str++;
 			}
-			// if (!(*str))
-			// 	str = first;
 			else
 			{
 				ret += ft_printf_char('%');
